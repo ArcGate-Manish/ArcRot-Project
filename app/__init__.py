@@ -1,7 +1,5 @@
-import imp
 import os
 from os.path import join, dirname, abspath
-from turtle import clear
 from flask import Flask, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
