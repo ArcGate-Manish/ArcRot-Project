@@ -9,12 +9,12 @@ from flask_security.utils import hash_password
 from . import db
 from .. import Role, User
 
-@click.command('create-database')
+@click.command(name='create_database')
 @with_appcontext
 def create_database():
     security = current_app.extensions.get('security')
 
-    db.drop_all()
+    # db.drop_all()
     db.create_all()
 
     user_role = Role(name='user')
