@@ -1,11 +1,11 @@
 import imp
 import os
 from os.path import join, dirname, abspath
+from turtle import clear
 from flask import Flask, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_migrate import Migrate
-# from flask_caching import Cache
 
 
 app = Flask(__name__, instance_relative_config=True)
@@ -29,7 +29,6 @@ convention = {
 metadata = MetaData(naming_convention=convention)
 db = SQLAlchemy(app, metadata=metadata)
 migrate = Migrate(app, db)
-# cache = Cache(app)
 
 
 basedir = abspath(dirname(__file__))

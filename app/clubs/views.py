@@ -28,7 +28,7 @@ def get_club_details(id):
         club_members_details = {}
         for row in club_details.club_members:
             club_members_details[row.id] = {}
-            club_members_details[row.id]['member_id'] = row.member_id
+            club_members_details[row.id]['club_id'] = row.club_id
             club_members_details[row.id]['club_id'] = row.club_id
             club_members_details[row.id]['club_member_id'] = row.club_member_id
             club_members_details[row.id]['member_first_name'] = row.member_first_name
