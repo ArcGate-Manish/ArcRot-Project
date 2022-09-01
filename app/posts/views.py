@@ -15,7 +15,7 @@ def get_post_details(id):
         details_list['title'] = post_details.title
         details_list['content'] = post_details.content
         details_list['cover_image_name'] = post_details.cover_image_name
-        details_list['created_at'] = post_details.created_at
+        details_list['created_at'] = post_details.post_created_at
         post_images_details = {}
         for row in post_details.post_images:
             post_images_details[row.id] = {}
@@ -48,22 +48,22 @@ def get_all_post_details():
             details_list[row.id]['title'] = row.title
             details_list[row.id]['content'] = row.content
             details_list[row.id]['cover_image_name'] = row.cover_image_name
-            details_list[row.id]['created_at'] = row.created_at
+            details_list[row.id]['created_at'] = row.post_created_at
             post_images_details ={}
             for post_images in row.post_images:
                 post_images_details[post_images.id] = {}
                 post_images_details[post_images.id]['post_id'] = post_images.post_id
                 post_images_details[post_images.id]['image_name'] = post_images.image_name
-                post_images_details[post_images.id]['created_at'] = post_images.created_at
-                post_images_details[post_images.id]['updated_at'] = post_images.updated_at
+                post_images_details[post_images.id]['created_at'] = post_images.postimg_created_at
+                post_images_details[post_images.id]['updated_at'] = post_images.postimg_updated_at
             details_list[row.id]['post_images'] = post_images_details
             post_tags_details = {}
             for post_tags in row.post_tags:
                 post_tags_details[post_tags.id] = {}
                 post_tags_details[post_tags.id]['id'] = post_tags.id
                 post_tags_details[post_tags.id]['name'] = post_tags.name
-                post_tags_details[post_tags.id]['created_at'] = post_tags.created_at
-                post_tags_details[post_tags.id]['updated_at'] = post_tags.updated_at
+                post_tags_details[post_tags.id]['created_at'] = post_tags.tag_created_at
+                post_tags_details[post_tags.id]['updated_at'] = post_tags.tag_updated_at
             details_list[row.id]['post_tags'] = post_tags_details
         return jsonify(details_list)
     else:

@@ -14,7 +14,7 @@ from .. import Role, User
 def create_database():
     security = current_app.extensions.get('security')
 
-    # db.drop_all()
+    db.drop_all()
     db.create_all()
 
     user_role = Role(name='user')

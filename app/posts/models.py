@@ -17,7 +17,7 @@ class Tag(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
-    created_at = db.Column(db.DateTime, default=datetime.now,
+    tag_created_at = db.Column(db.DateTime, default=datetime.now,
                            nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
@@ -50,7 +50,7 @@ class Post(db.Model):
     title = db.Column(db.String(255), nullable=False)
     content = db.Column(db.Text, nullable=False)
     cover_image_name = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now,
+    post_created_at = db.Column(db.DateTime, default=datetime.now,
                            nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
@@ -90,7 +90,7 @@ class PostImages(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(
         'posts.id'), nullable=False, index=True)
     image_name = db.Column(db.String(255), nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.now,
+    postimg_created_at = db.Column(db.DateTime, default=datetime.now,
                            nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)

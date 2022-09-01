@@ -19,7 +19,7 @@ class Role(db.Model, RoleMixin):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, index=True)
-    created_at = db.Column(db.DateTime, default=datetime.now, index=True,
+    role_created_at = db.Column(db.DateTime, default=datetime.now, index=True,
                            server_default=text('CURRENT_TIMESTAMP'))
     updated_at = db.Column(db.DateTime, default=datetime.now,
                            onupdate=datetime.now,
@@ -54,10 +54,10 @@ class User(db.Model, UserMixin):
     contact_number = db.Column(db.BigInteger, nullable=True)
     email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
-    # active = db.Column(db.SmallInteger, default=1,
-    #                       nullable=False, index=True)
+    active = db.Column(db.SmallInteger, default=1,
+                          nullable=False, index=True)
     active= db.Column(db.Boolean,nullable = False, default = True)
-    created_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
+    user_created_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)

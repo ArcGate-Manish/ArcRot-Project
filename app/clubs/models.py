@@ -27,7 +27,7 @@ class Club(db.Model):
     is_active = db.Column(db.SmallInteger, default=1,
                           nullable=False, index=True)
     created_at = db.Column(db.DateTime, default=datetime.now,
-                           nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
+                           nullable=False, server_default=text('CURRENT_TIMESTAMP'))
     updated_at = db.Column(db.DateTime, default=datetime.now,  onupdate=datetime.now,nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'))
     club_members = db.relationship(
@@ -74,7 +74,7 @@ class ClubMembers(db.Model):
     club_member_email = db.Column(db.String(255), nullable = False)
     member_till = db.Column(db.DateTime, default=datetime.now, nullable=False,
                             server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
-    is_active = db.Column(db.SmallInteger, default=0,
+    club_memb_is_active = db.Column(db.SmallInteger, default=0,
                           nullable=False, index=True)
     
     def save(self):
