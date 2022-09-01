@@ -82,7 +82,7 @@ def get_all_club_details():
                 club_members_details[club_member.id]['profile'] = club_member.profile
                 club_members_details[club_member.id]['club_member_email'] = club_member.club_member_email
                 club_members_details[club_member.id]['member_till'] = club_member.member_till
-                club_members_details[club_member.id]['is_active'] = club_member.is_active
+                club_members_details[club_member.id]['is_active'] = club_member.club_memb_is_active
             details_list[row.id]['club_members'] = club_members_details
     response = make_response(jsonify(details_list))
     # response.headers['ngrok-skip-browser-warning'] = 'skipbrowser'
