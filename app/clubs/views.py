@@ -24,6 +24,8 @@ def get_club_details(id):
         details_list['vendors'] = club_details.vendors
         details_list['website'] = club_details.website
         details_list['rotary_langauge'] = club_details.rotary_langauge
+        details_list['club_ids'] = club_details.club_ids
+        details_list['club_type'] = club_details.club_type
         details_list['mailing_address'] = club_details.mailing_address
         club_members_details = {}
         for row in club_details.club_members:
@@ -66,6 +68,8 @@ def get_all_club_details():
             details_list[row.id]['vendors'] = row.vendors
             details_list[row.id]['website'] = row.website
             details_list[row.id]['rotary_langauge'] = row.rotary_langauge
+            details_list[row.id]['club_ids'] = row.club_ids
+            details_list[row.id]['club_type'] = row.club_type
             details_list[row.id]['mailing_address'] = row.mailing_address
             club_members_details = {}
             for club_member in row.club_members:
