@@ -39,7 +39,7 @@ def get_club_details(id):
             club_members_details[row.id]['profile'] = row.profile
             club_members_details[row.id]['club_member_email'] = row.club_member_email
             club_members_details[row.id]['member_till'] = row.member_till
-            club_members_details[row.id]['is_active'] = row.is_active
+            club_members_details[row.id]['is_active'] = row.club_memb_is_active
         details_list['club_members'] = club_members_details
         return jsonify(details_list)
         
