@@ -15,6 +15,7 @@ class Club(db.Model):
     address = db.Column(db.String(255), nullable=False)
     about = db.Column(db.Text, nullable=True)
     email_id = db.Column(db.String(255), nullable=False, unique=True)
+    assistant_governor = db.Column(db.String(255), nullable = False)
     club_ids =db.Column(db.String(255), nullable=False)
     club_type = db.Column(db.String(255), nullable =False)
     location = db.Column(db.String(255), nullable=False, unique=False)

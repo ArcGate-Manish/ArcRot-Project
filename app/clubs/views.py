@@ -9,8 +9,9 @@ from .models import Club
 @club_blueprint.route('/<int:id>/',methods=['GET'])
 def get_club_details(id):
     club_details = Club.getClubById(id)
-    details_list ={}
+    details_list = []
     if(club_details):
+        details_list.append({})
         details_list['id'] = club_details.id
         details_list['name'] = club_details.name
         details_list['address'] = club_details.address
@@ -27,8 +28,10 @@ def get_club_details(id):
         details_list['club_ids'] = club_details.club_ids
         details_list['club_type'] = club_details.club_type
         details_list['mailing_address'] = club_details.mailing_address
+        details_list['assistant_governor '] = club_details.assistant_governor 
         club_members_details = {}
         for row in club_details.club_members:
+            club_members_details.append({})
             club_members_details[row.id] = {}
             club_members_details[row.id]['club_id'] = row.club_id
             club_members_details[row.id]['club_id'] = row.club_id
@@ -71,6 +74,7 @@ def get_all_club_details():
             details_list[-1]['club_ids'] = row.club_ids
             details_list[-1]['club_type'] = row.club_type
             details_list[-1]['mailing_address'] = row.mailing_address
+            details_list[-1]['assistant_governor'] = row.assistant_governor            
             club_members_details = []
             for club_member in row.club_members:
                 club_members_details.append({})
