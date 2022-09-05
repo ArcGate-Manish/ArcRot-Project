@@ -1,3 +1,4 @@
+import imp
 from flask import flash, render_template, session, redirect, url_for, request, jsonify,make_response
 from flask_login import login_required, login_manager, logout_user, login_user
 from flask_security.utils import verify_password
@@ -5,6 +6,7 @@ from . import login_blueprint
 from .. import User, db
 from .form import loginForm
 from sqlalchemy import text
+from flask_cors import cross_origin
 
 
 @login_blueprint.route('/login', methods=['GET', 'POST'])
@@ -42,6 +44,7 @@ def home():
 # -------------LOGIN API--------------
 
 @login_blueprint.route('/loginapi', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def loginapi():
     # print("inside func")
     try:

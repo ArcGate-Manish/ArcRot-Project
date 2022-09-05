@@ -4,10 +4,11 @@ from flask import Flask, url_for, render_template
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import MetaData
 from flask_migrate import Migrate
+from flask_cors import CORS
 
 
 app = Flask(__name__, instance_relative_config=True)
-
+CORS(app, supports_credentials= True)
 
 app.config.from_object('config.default')
 app.config.from_object('config.development')
