@@ -57,7 +57,7 @@ def loginapi():
                 if verify_password(_password, result.password):
                     session['email'] = result.email
                     resp = jsonify({'message': 'You are logged in successfully'})
-                    resp.headers.add("Access-Control-Allow-Origin", "*")
+                    # resp.headers.add("Access-Control-Allow-Origin", "*")
                     return resp, 200
                 else:
                     resp = jsonify(
