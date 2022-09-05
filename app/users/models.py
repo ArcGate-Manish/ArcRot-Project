@@ -20,7 +20,7 @@ class Role(db.Model, RoleMixin):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, index=True)
     role_created_at = db.Column(db.DateTime, default=datetime.now, index=True,
-                           server_default=text('CURRENT_TIMESTAMP'))
+                                server_default=text('CURRENT_TIMESTAMP'))
     updated_at = db.Column(db.DateTime, default=datetime.now,
                            onupdate=datetime.now,
                            server_default=text('CURRENT_TIMESTAMP'))
@@ -55,15 +55,15 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(255), nullable=False, unique=True)
     password = db.Column(db.String(255), nullable=False)
     active = db.Column(db.SmallInteger, default=1,
-                          nullable=False, index=True)
-    active= db.Column(db.Boolean,nullable = False, default = True)
+                       nullable=False, index=True)
+    active = db.Column(db.Boolean, nullable=False, default=True)
     user_created_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
-                           server_default=text('CURRENT_TIMESTAMP'), index=True)
+                                server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
     author = db.relationship('Author', backref='users', lazy='joined')
     roles = db.relationship('Role', secondary=roles_users,
-                           backref='users', lazy='joined')
+                            backref='users', lazy='joined')
 
     def save(self):
         db.session.add(self)
@@ -81,8 +81,7 @@ class User(db.Model, UserMixin):
         return f"<User {self.id}: {self.first_name} {self.last_name}>"
 
     def getUserById(id):
-        return User.query.options(lazyload(User.author)).options(lazyload(User.roles)).filter_by(id = id).first()
-
+        return User.query.options(lazyload(User.author)).options(lazyload(User.roles)).filter_by(id=id).first()
 
     def getAllUser():
         return User.query.options(lazyload(User.author)).options(lazyload(User.roles)).all()

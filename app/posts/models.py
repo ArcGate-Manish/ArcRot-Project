@@ -18,7 +18,7 @@ class Tag(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=False, unique=True)
     tag_created_at = db.Column(db.DateTime, default=datetime.now,
-                           nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
+                               nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
 
@@ -51,11 +51,12 @@ class Post(db.Model):
     content = db.Column(db.Text, nullable=False)
     cover_image_name = db.Column(db.String(255), nullable=False)
     post_created_at = db.Column(db.DateTime, default=datetime.now,
-                           nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
+                                nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
     post_images = db.relationship('PostImages', backref='posts', lazy='joined')
-    post_tags = db.relationship('Tag', secondary=post_tag, backref='posts',lazy ='joined')
+    post_tags = db.relationship(
+        'Tag', secondary=post_tag, backref='posts', lazy='joined')
 
     def save(self):
         db.session.add(self)
@@ -72,13 +73,12 @@ class Post(db.Model):
     def __repr__(self):
         return f"<Post {self.id}>"
 
-    
     def getPostById(id):
         return Post.query.options(lazyload(Post.post_tags)).options(lazyload(Post.post_images)).filter_by(id=id).first()
 
     def getAllPost():
         return Post.query.options(lazyload(Post.post_tags)).all()
-    
+
 
 class PostImages(db.Model):
     """This class represents post_images table in the database.
@@ -91,7 +91,7 @@ class PostImages(db.Model):
         'posts.id'), nullable=False, index=True)
     image_name = db.Column(db.String(255), nullable=False)
     post_image_created_at = db.Column(db.DateTime, default=datetime.now,
-                           nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
+                                      nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
 

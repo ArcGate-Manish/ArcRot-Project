@@ -15,23 +15,23 @@ class Club(db.Model):
     address = db.Column(db.String(255), nullable=False)
     about = db.Column(db.Text, nullable=True)
     email_id = db.Column(db.String(255), nullable=False, unique=True)
-    assistant_governor = db.Column(db.String(255), nullable = False)
-    club_ids =db.Column(db.String(255), nullable=False)
-    club_type = db.Column(db.String(255), nullable =False)
+    assistant_governor = db.Column(db.String(255), nullable=False)
+    club_ids = db.Column(db.String(255), nullable=False)
+    club_type = db.Column(db.String(255), nullable=False)
     location = db.Column(db.String(255), nullable=False, unique=False)
-    district_code = db.Column(db.Integer, nullable=False, unique= True)
-    chartered = db.Column(db.Integer, nullable = False, unique = False)
-    phone_no =db.Column(db.BigInteger, nullable = True)
-    fax_no = db.Column(db.BigInteger, nullable = True)
-    vendors = db.Column (db.String(255),nullable = True)
-    website =db.Column(db.String(255), nullable = True)
-    rotary_langauge = db.Column(db.String(255),nullable = True)
-    mailing_address = db.Column(db.String(255),nullable = True)
+    district_code = db.Column(db.Integer, nullable=False, unique=True)
+    chartered = db.Column(db.Integer, nullable=False, unique=False)
+    phone_no = db.Column(db.BigInteger, nullable=True)
+    fax_no = db.Column(db.BigInteger, nullable=True)
+    vendors = db.Column(db.String(255), nullable=True)
+    website = db.Column(db.String(255), nullable=True)
+    rotary_langauge = db.Column(db.String(255), nullable=True)
+    mailing_address = db.Column(db.String(255), nullable=True)
     is_active = db.Column(db.SmallInteger, default=1,
                           nullable=False, index=True)
     created_at = db.Column(db.DateTime, default=datetime.now,
                            nullable=False, server_default=text('CURRENT_TIMESTAMP'))
-    updated_at = db.Column(db.DateTime, default=datetime.now,  onupdate=datetime.now,nullable=False,
+    updated_at = db.Column(db.DateTime, default=datetime.now,  onupdate=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'))
     club_members = db.relationship(
         'ClubMembers', backref='Club', lazy='joined')
@@ -50,14 +50,12 @@ class Club(db.Model):
 
     def __repr__(self):
         return f"<Club {self.id}: {self.name}>"
-    
-    def getClubById(id):
-        return Club.query.options(lazyload(Club.club_members)).filter_by(id = id).first()
 
+    def getClubById(id):
+        return Club.query.options(lazyload(Club.club_members)).filter_by(id=id).first()
 
     def getAllClub():
         return Club.query.options(lazyload(Club.club_members)).all()
-
 
 
 class ClubMembers(db.Model):
@@ -68,18 +66,18 @@ class ClubMembers(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     club_id = db.Column(db.Integer, db.ForeignKey('clubs.id'), nullable=False)
-    club_member_id = db.Column(db.Integer,nullable = True, unique = True) 
+    club_member_id = db.Column(db.Integer, nullable=True, unique=True)
     member_first_name = db.Column(db.String(255), nullable=False)
     member_last_name = db.Column(db.String(255), nullable=True)
     member_from = db.Column(db.DateTime, default=datetime.now,
                             nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
-    profile = db.Column(db.String(255), nullable = False)
-    club_member_email = db.Column(db.String(255), nullable = False)
+    profile = db.Column(db.String(255), nullable=False)
+    club_member_email = db.Column(db.String(255), nullable=False)
     member_till = db.Column(db.DateTime, default=datetime.now, nullable=False,
                             server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
     club_memb_is_active = db.Column(db.SmallInteger, default=0,
-                          nullable=False, index=True)
-    
+                                    nullable=False, index=True)
+
     def save(self):
         db.session.add(self)
         db.session.commit()
@@ -94,6 +92,3 @@ class ClubMembers(db.Model):
 
     def __repr__(self):
         return f"<Club Id: {self.id}, Member Id: {self.club_member_id}>"
-
-
-    

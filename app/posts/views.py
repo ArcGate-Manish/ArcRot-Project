@@ -3,13 +3,11 @@ from . import post_blueprint
 from .models import Post
 
 
-
-
-@post_blueprint.route('/<int:id>/',methods=['GET'])
+@post_blueprint.route('/<int:id>/', methods=['GET'])
 def get_post_details(id):
     post_details = Post.getPostById(id)
-    details_list =[]
-    if(post_details):
+    details_list = []
+    if (post_details):
         details_list.append({})
         details_list[-1]['id'] = post_details.id
         details_list[-1]['author_id'] = post_details.author_id
@@ -24,7 +22,7 @@ def get_post_details(id):
             post_images_details[-1]['post_id'] = row.post_id
             post_images_details[-1]['image_name'] = row.image_name
         details_list[-1]['post_images'] = post_images_details
-        post_tags_details =[]
+        post_tags_details = []
         for row in post_details.post_tags:
             post_tags_details.append({})
             post_tags_details[-1]['id'] = row.id
@@ -35,13 +33,12 @@ def get_post_details(id):
         return jsonify([])
 
 
-
-@post_blueprint.route('/list/',methods=['GET'])
+@post_blueprint.route('/list/', methods=['GET'])
 def get_all_post_details():
     post_details = Post.getAllPost()
     print(post_details)
-    details_list =[]
-    if(post_details):
+    details_list = []
+    if (post_details):
         for row in post_details:
             details_list.append({})
             details_list[-1]['id'] = row.id
@@ -50,7 +47,7 @@ def get_all_post_details():
             details_list[-1]['content'] = row.content
             details_list[-1]['cover_image_name'] = row.cover_image_name
             details_list[-1]['created_at'] = row.post_created_at
-            post_images_details =[]
+            post_images_details = []
             for post_images in row.post_images:
                 post_images_details.append({})
                 post_images_details[-1]['post_id'] = post_images.post_id

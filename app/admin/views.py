@@ -73,12 +73,4 @@ class CustomView(BaseView):
         return self.render('admin/custom_index.html')
 
 
-# class AuthorView(MyModelView):
-#     column_editable_list = ['', 'first_name', 'last_name']
-#     column_searchable_list = column_editable_list
-#     column_exclude_list = ['password']
-#     # form_excluded_columns = column_exclude_list
-#     column_details_exclude_list = column_exclude_list
-#     column_filters = column_editable_list
-
 
