@@ -40,12 +40,31 @@ class MyModelView(sqla.ModelView):
 
 
 class UserView(MyModelView):
-    column_editable_list = ['email', 'first_name', 'last_name']
-    column_searchable_list = column_editable_list
-    column_exclude_list = ['password']
-    # form_excluded_columns = column_exclude_list
-    column_details_exclude_list = column_exclude_list
-    column_filters = column_editable_list
+    # column_editable_list = ['email', 'first_name', 'last_name']
+    # column_searchable_list = column_editable_list
+    # column_exclude_list = ['user_created_at','updated_at']
+    form_excluded_columns = ['user_created_at','updated_at']
+    # column_details_exclude_list = column_exclude_list
+    # column_filters = column_editable_list
+
+
+class ClubView(MyModelView):
+    form_excluded_columns = ['created_at','updated_at']
+
+class AuthorView(MyModelView):
+    form_excluded_columns = ['created_at','updated_at']
+
+class RoleView(MyModelView):
+    form_excluded_columns = ['role_created_at','updated_at']
+
+class TagView(MyModelView):
+    form_excluded_columns = ['tag_created_at','updated_at']
+
+class PostView(MyModelView):
+    form_excluded_columns = ['post_created_at','updated_at']
+
+class PostImagesView(MyModelView):
+    form_excluded_columns = ['post_image_created_at','updated_at']    
 
 
 class CustomView(BaseView):
@@ -54,12 +73,12 @@ class CustomView(BaseView):
         return self.render('admin/custom_index.html')
 
 
-class AuthorView(MyModelView):
-    column_editable_list = ['', 'first_name', 'last_name']
-    column_searchable_list = column_editable_list
-    column_exclude_list = ['password']
-    # form_excluded_columns = column_exclude_list
-    column_details_exclude_list = column_exclude_list
-    column_filters = column_editable_list
+# class AuthorView(MyModelView):
+#     column_editable_list = ['', 'first_name', 'last_name']
+#     column_searchable_list = column_editable_list
+#     column_exclude_list = ['password']
+#     # form_excluded_columns = column_exclude_list
+#     column_details_exclude_list = column_exclude_list
+#     column_filters = column_editable_list
 
 

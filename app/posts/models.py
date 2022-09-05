@@ -90,7 +90,7 @@ class PostImages(db.Model):
     post_id = db.Column(db.Integer, db.ForeignKey(
         'posts.id'), nullable=False, index=True)
     image_name = db.Column(db.String(255), nullable=False)
-    postimg_created_at = db.Column(db.DateTime, default=datetime.now,
+    post_image_created_at = db.Column(db.DateTime, default=datetime.now,
                            nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                            server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)

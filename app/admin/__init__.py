@@ -24,15 +24,15 @@ admin = flask_admin.Admin(
 )
 # Add model views
 
-from .views import MyModelView
-admin.add_view(MyModelView(Role, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Roles"))
-admin.add_view(MyModelView(Club, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Clubs"))
+from .views import MyModelView, UserView, ClubView, AuthorView, RoleView, TagView, PostView, PostImagesView
+admin.add_view(RoleView(Role, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Roles"))
+admin.add_view(ClubView(Club, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Clubs"))
 admin.add_view(MyModelView(ClubMembers, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Club Members"))
-admin.add_view(MyModelView(Tag, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Tags"))
-admin.add_view(MyModelView(Author, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Author"))
-admin.add_view(MyModelView(Post, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Posts"))
-admin.add_view(MyModelView(PostImages, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Post Images"))
-admin.add_view(MyModelView(User, db.session, menu_icon_type='fa', menu_icon_value='fa-users', name="Users"))
+admin.add_view(TagView(Tag, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Tags"))
+admin.add_view(AuthorView(Author, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Author"))
+admin.add_view(PostView(Post, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Posts"))
+admin.add_view(PostImagesView(PostImages, db.session, menu_icon_type='fa', menu_icon_value='fa-server', name="Post Images"))
+admin.add_view(UserView(User, db.session, menu_icon_type='fa', menu_icon_value='fa-users', name="Users"))
 # admin.add_view(CustomView(name="Custom view", endpoint='custom', menu_icon_type='fa', menu_icon_value='fa-connectdevelop',))
 
 # define a context processor for merging flask-admin's template context into the

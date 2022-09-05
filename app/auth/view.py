@@ -1,6 +1,3 @@
-
-from ast import Delete
-import dbm
 from flask import flash, render_template, session, redirect, url_for, request, jsonify
 from flask_login import login_required, login_manager, logout_user, login_user
 from flask_security.utils import verify_password
@@ -46,7 +43,7 @@ def home():
 
 @login_blueprint.route('/loginapi', methods=['POST'])
 def loginapi():
-    print("inside func")
+    # print("inside func")
     try:
         _username = request.form['email']
         _password = request.form['password']
@@ -74,7 +71,7 @@ def loginapi():
             resp.status_code = 400
             return resp
     except Exception as e:
-        print("inside except")
+        # print("inside except")
         return "inside except"
 
 
