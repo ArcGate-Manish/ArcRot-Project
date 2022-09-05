@@ -86,28 +86,3 @@ class User(db.Model, UserMixin):
 
     def getAllUser():
         return User.query.options(lazyload(User.author)).options(lazyload(User.roles)).all()
-    
-    # @staticmethod
-    # @cache.memoize(timeout=3600 * 24)
-    # def getAllByRoleId():
-    #     return User.query.options(lazyload(User.roles)).filter(User.roles.id==1).all()
-
-            
-
-    # @staticmethod
-    # @cache.memoize(timeout=3600*24)
-    # def getAllActive():
-    #     allData = PermissionRoutes.query.filter(PermissionRoutes.parent_id != 0)\
-    #         .filter(PermissionRoutes.status == 1).all()
-        # return allData
-
-
-
-    # def isAdmin():
-        # return User.
-
-    # @password.setter
-    # def password(self, new_pass):
-    #     """Salt/Hash and save the user's new password."""
-    #     new_password_hash = compute_new_password_hash(new_pass, self._salt)
-    #     self._password = new_password_hash
