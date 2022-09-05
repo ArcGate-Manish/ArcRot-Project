@@ -5,6 +5,7 @@ from . import login_blueprint
 from .. import User, db
 from .form import loginForm
 from sqlalchemy import text
+from flask_cors import cross_origin
 
 
 @login_blueprint.route('/login', methods=['GET', 'POST'])
@@ -42,6 +43,7 @@ def home():
 # -------------LOGIN API--------------
 
 @login_blueprint.route('/loginapi', methods=['POST'])
+@cross_origin
 def loginapi():
     # print("inside func")
     try:
@@ -54,7 +56,9 @@ def loginapi():
             if result:
                 if verify_password(_password, result.password):
                     session['email'] = result.email
-                    return jsonify({'message': 'You are logged in successfully'}), 200
+                    resp = jsonify({'message': 'You are logged in successfully'})
+                    resp.headers.add("Access-Control-Allow-Origin", "*")
+                    return resp, 200
                 else:
                     resp = jsonify(
                         {'message': 'Bad Request - invalid password'})
