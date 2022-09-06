@@ -12,11 +12,10 @@ from sqlalchemy.orm import lazyload
 @login_blueprint.route('/loginapi', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def loginapi():
-    # print("inside func")
     try:
-        _username = request.form['email']
-        _password = request.form['password']
-
+        data = request.get_json()
+        _username = data['email']
+        _password = data['password']
         if _username and _password:
             result = User.query.options(lazyload(User.roles)).filter(
                 User.email == _username).first()
@@ -35,13 +34,12 @@ def loginapi():
                     {'message': 'Bad Request - invalid username'})
                 resp.status_code = 400
                 return resp
-
         else:
             resp = jsonify({'message': 'Bad Request - invalid credendtials'})
             resp.status_code = 400
             return resp
     except Exception as e:
-        return {}
+        return "hello"
 
 
 @login_blueprint.route('/logoutapi')
