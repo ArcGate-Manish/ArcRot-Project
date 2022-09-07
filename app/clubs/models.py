@@ -57,6 +57,10 @@ class Club(db.Model):
     def getAllClub():
         return Club.query.options(lazyload(Club.club_members)).all()
 
+    
+    def getTotalClub():
+        return len(Club.query.all())
+
 
 class ClubMembers(db.Model):
     """This table represents the club_members table in the database.
@@ -92,3 +96,6 @@ class ClubMembers(db.Model):
 
     def __repr__(self):
         return f"<Club Id: {self.id}, Member Id: {self.club_member_id}>"
+
+    def getTotalMember():
+        return len(ClubMembers.query.all())

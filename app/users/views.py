@@ -6,7 +6,6 @@ from .models import User
 @user_blueprint.route('/<int:id>/', methods=['GET'])
 def get_user_details(id):
     user_details = User.getUserById(id)
-    print(user_details)
     details_list = []
     if (user_details):
         details_list.append({})
