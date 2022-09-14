@@ -20,7 +20,6 @@ def get_author_details(id):
 @author_blueprint.route('/list/', methods=['GET'])
 def get_all_author_details():
     author_details = Author.getAllAuthor()
-    print(author_details)
     details_list = []
     if (author_details):
         for row in author_details:

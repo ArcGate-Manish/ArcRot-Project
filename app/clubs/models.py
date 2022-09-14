@@ -2,6 +2,11 @@ from sqlalchemy import text
 from sqlalchemy.orm import lazyload
 from datetime import datetime
 from .. import db
+from sqlalchemy_imageattach.entity import Image, image_attachment
+from wtforms.fields import FileField
+import os.path as op
+from werkzeug.utils import secure_filename
+from flask_admin.form import ImageUploadField
 
 
 class Club(db.Model):
@@ -57,7 +62,6 @@ class Club(db.Model):
     def getAllClub():
         return Club.query.options(lazyload(Club.club_members)).all()
 
-    
     def getTotalClub():
         return len(Club.query.all())
 
@@ -76,11 +80,12 @@ class ClubMembers(db.Model):
     member_from = db.Column(db.DateTime, default=datetime.now,
                             nullable=False, server_default=text('CURRENT_TIMESTAMP'), index=True)
     profile = db.Column(db.String(255), nullable=False)
-    club_member_email = db.Column(db.String(255), nullable=False)
+    club_member_email = db.Column(db.String(255), nullable=False, unique=True)
     member_till = db.Column(db.DateTime, default=datetime.now, nullable=False,
                             server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
     club_memb_is_active = db.Column(db.SmallInteger, default=0,
                                     nullable=False, index=True)
+    profile_picture = db.Column(db.String(255), nullable=True)
 
     def save(self):
         db.session.add(self)

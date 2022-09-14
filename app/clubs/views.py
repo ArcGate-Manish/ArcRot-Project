@@ -87,3 +87,18 @@ def get_all_club_details():
     response = make_response(jsonify(details_list))
     # response.headers['ngrok-skip-browser-warning'] = 'skipbrowser'
     return response
+
+
+
+@club_blueprint.route('/summary')
+def get_total_of_all():
+    total_club = Club.getTotalClub()
+    total_member = ClubMembers.getTotalMember()
+    temp = {}
+    temp['total_club'] = total_club
+    temp['total_projects'] = 15
+    temp['total_project_cost'] = 4800000 
+    temp['total_member'] = total_member
+    temp['total_beneficiaries'] = 22345
+    return jsonify([temp])
+    
