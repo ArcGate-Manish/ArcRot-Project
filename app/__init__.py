@@ -56,7 +56,6 @@ from .author.models import Author
 from .clubs.models import Club, ClubMembers
 from .posts.models import Post, PostImages, Tag
 from .events.models import Event
-from .uploads.model import Uploads
 
 
 from .admin import admin_blueprint

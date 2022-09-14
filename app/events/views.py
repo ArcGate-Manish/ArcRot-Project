@@ -1,6 +1,3 @@
-from crypt import methods
-from operator import methodcaller
-from tkinter.messagebox import RETRY
 from flask import jsonify
 from . import event_blueprint
 from . models import Event

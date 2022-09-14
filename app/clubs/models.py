@@ -2,10 +2,6 @@ from sqlalchemy import text
 from sqlalchemy.orm import lazyload
 from datetime import datetime
 from .. import db
-from wtforms.fields import FileField
-import os.path as op
-from werkzeug.utils import secure_filename
-from flask_admin.form import ImageUploadField
 
 
 class Club(db.Model):
