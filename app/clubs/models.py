@@ -2,7 +2,6 @@ from sqlalchemy import text
 from sqlalchemy.orm import lazyload
 from datetime import datetime
 from .. import db
-from sqlalchemy_imageattach.entity import Image, image_attachment
 from wtforms.fields import FileField
 import os.path as op
 from werkzeug.utils import secure_filename
