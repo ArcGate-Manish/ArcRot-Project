@@ -1,7 +1,7 @@
 {% import 'admin/layout.html' as layout with context -%}
 {% import 'admin/static.html' as admin_static with context %}
 <!DOCTYPE html>
-<html>
+<html style="height: 100%;">
 <head>
   <title>{% block title %}{% if admin_view.category %}{{ admin_view.category }} - {% endif %}{{ admin_view.name }} - {{ admin_view.admin.name }}{% endblock title%}</title>
 
@@ -52,13 +52,19 @@
   {% block head_tail %}
   {% endblock head_tail%}
 
+<style>
+  html,body{
+    height: 100%;
+  }
+</style>
+
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 
   {% block page_body %}
 
   <!-- TOP NAVBAR -->
-  <div class="wrapper">
+  <div class="wrapper" style=" align-items: center; height: 100%;">
     {% if current_user.is_authenticated %}
     <header class="main-header">
       <!-- Logo -->
