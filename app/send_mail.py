@@ -59,7 +59,7 @@ def send_confiramation_email(email):
 
 def forgot_password_mail(email):
     token = generate_confirmation_token(email)
-    confirmation_url = f"http://somewhere.com/anywhere.co?token={token}"
+    confirmation_url = f"https://arcapp.vercel.app?token={token}"
     with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
         from_adr = 'arcgatedemoacc@gmail.com'
         to_adr = email
