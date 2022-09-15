@@ -84,6 +84,7 @@ def forgotPassword():
 # ########################################################################################
 
 @login_blueprint.route('/reset_password', methods=['POST'])
+@cross_origin(supports_credentials=True)
 def reset_password():
     # print("-----------------",request.__dict__)
     arguments = request.args

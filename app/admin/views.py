@@ -1,5 +1,4 @@
 from datetime import datetime
-from os import rename
 from flask import url_for, redirect, request, abort
 from flask_security import current_user
 from flask_admin.contrib import sqla
@@ -10,10 +9,10 @@ from .. import app, ClubMembers, db
 import PIL
 import os.path as op
 from werkzeug.utils import secure_filename
-from wtforms.validators import DataRequired,InputRequired
-# Create customized model view class
+from wtforms.validators import DataRequired, InputRequired
 from flask_admin.form import ImageUploadField
 import time
+
 
 class MyModelView(sqla.ModelView):
 
@@ -47,10 +46,10 @@ class MyModelView(sqla.ModelView):
 
 
 class UserView(MyModelView):
+    form_excluded_columns = ['user_created_at', 'updated_at', 'image_name']
     # column_editable_list = ['email', 'first_name', 'last_name']
     # column_searchable_list = column_editable_list
-    # column_exclude_list = ['user_created_at','updated_at']
-    form_excluded_columns = ['user_created_at', 'updated_at']
+    column_exclude_list = ['password','image_name']
     # column_details_exclude_list = column_exclude_list
     # column_filters = column_editable_list
 
@@ -65,15 +64,15 @@ class ClubMemberView(MyModelView):
 ################################################################
 #                       ADD COSTUM FIELD
 ################################################################
-    
+
     def prefix_name(obj, file_data):
         timestr = time.strftime("%Y%m%d-%H%M%S")
         parts = op.splitext(file_data.filename)
         return secure_filename(f"clubmember_{obj.club_member_id}")
     form_extra_fields = {
         'profile_picture': form.ImageUploadField('Profile Image (Please Upload file with .jpg, .jpeg, .png )',
-                                      base_path=app.config['PROFILE_IMAGES_UPLOADS_DIR'],
-                                      thumbnail_size=(100, 100, True), namegen=prefix_name,validators=[DataRequired(),InputRequired()])
+                                                 base_path=app.config['PROFILE_IMAGES_UPLOADS_DIR'],
+                                                 thumbnail_size=(100, 100, True), namegen=prefix_name, validators=[DataRequired(), InputRequired()])
     }
 
 
@@ -95,6 +94,9 @@ class PostView(MyModelView):
 
 class PostImagesView(MyModelView):
     form_excluded_columns = ['post_image_created_at', 'updated_at']
+
+class EventView(MyModelView):
+    form_excluded_columns = ['event_created_at', 'updated_at']
 
 
 class CustomView(BaseView):
