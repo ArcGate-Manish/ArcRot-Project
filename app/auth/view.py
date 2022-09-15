@@ -105,10 +105,10 @@ def reset_password():
 
         user_obj = User.query.filter_by(email=confirm_token).first()
         if not user_obj:
-            return make_response(jsonify({'message': "No match found! Please enter valid credentials", 'status': 401})), 400
+            return make_response(jsonify({'message': "No match found! Please enter valid credentials", 'status': 400})), 400
 
         user_obj.password = hash_password(password)
         user_obj.save()
         return make_response(jsonify({'message': 'Password reset succesfully.', 'status': 200}))
     else:
-        return make_response(jsonify({'message': 'Authentication Error.', 'status': 400}))
+        return make_response(jsonify({'message': 'Authentication Error.', 'status': 400})), 400
