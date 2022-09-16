@@ -57,6 +57,7 @@ class User(db.Model, UserMixin):
     active = db.Column(db.SmallInteger, default=1,
                        nullable=False, index=True)
     active = db.Column(db.Boolean, nullable=False, default=True)
+    token_generated= db.Column(db.SmallInteger, default=0, nullable=False, server_default='0')
     user_created_at = db.Column(db.DateTime, default=datetime.now, nullable=False,
                                 server_default=text('CURRENT_TIMESTAMP'), index=True)
     updated_at = db.Column(db.DateTime, default=datetime.now, nullable=False,

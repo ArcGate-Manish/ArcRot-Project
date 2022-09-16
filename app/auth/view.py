@@ -1,3 +1,5 @@
+import email
+from lib2to3.pgen2 import token
 from flask import session, request, jsonify, make_response
 from flask_login import login_required
 from flask_security.utils import verify_password
@@ -68,15 +70,14 @@ def logoutapi():
 @login_blueprint.route('/forgotPassword', methods=['POST'])
 def forgotPassword():
     if request.json.get('email') is None:
-        return make_response(jsonify({'message': "enter a valid email", 'status': 401})), 400
+        return make_response(jsonify({'message': "enter a valid email", 'status': 400})), 400
     if not User.query.filter_by(email=request.json.get('email')).first():
-        return make_response(jsonify({'message': "No match found! Please enter valid credentials", 'status': 401})), 400
+        return make_response(jsonify({'message': "No match found! Please enter valid credentials", 'status': 400})), 400
     forgot_password_mail(request.json.get('email'))
-    if (User.query.filter_by(email=request.json.get('email'))):
-        return make_response(jsonify({'message': 'Email Sent Succesfully.', 'status': 201}))
-
-    else:
-        return "invalid"
+    user = User.query.filter(User.email == request.json.get('email')).first()
+    user.token_generated = 1
+    user.update()
+    return make_response(jsonify({'message': 'Email Sent Succesfully.', 'status': 200})), 200
 
 
 # ########################################################################################
@@ -86,29 +87,34 @@ def forgotPassword():
 @login_blueprint.route('/reset_password', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def reset_password():
-    # print("-----------------",request.__dict__)
-    arguments = request.args
-    # print(arguments, type(arguments))
-    token = arguments.get('token')
-    password = request.get_json().get('password')
-    confirm_pass = request.get_json().get('confirm_pass')
+    try: 
+        arguments = request.args
+        token = arguments.get('token')
+        password = request.get_json().get('password')
+        confirm_pass = request.get_json().get('confirm_pass')
+        confirm_token = confirrm_token(token)
+        # print("-----------------",request.__dict__)
+        print("++++++++++++++++++++", token,confirm_token, password, confirm_pass)
+        if confirm_token:
+            user = User.query.filter(User.email == confirm_token).first()
+            if user:
+                if confirm_token and user.token_generated:
 
-    confirm_token = confirrm_token(token)
-    print("++++++++++++++++++++", token, confirm_token, password, confirm_pass)
-    if confirm_token:
+                    if None in [token, confirm_token, password, confirm_pass]:
+                        return make_response(jsonify({'message': "Invalid Credentials", 'status': 400})), 400   
+                    if password != confirm_pass:
+                        return make_response(jsonify({'message': "Passwords dosen't match", 'status': 400})), 400
+                    user.password = hash_password(password)
+                    user.token_generated = 0
+                    user.update()
+                    return make_response(jsonify({'message': 'Password reset succesfully.', 'status': 200})), 200
 
-        if None in [token, confirm_token, password, confirm_pass]:
-            return make_response(jsonify({'message': "Bad request", 'status': 400})), 400
-
-        if password != confirm_pass:
-            return make_response(jsonify({'message': "Passwords dosen't match", 'status': 400})), 400
-
-        user_obj = User.query.filter_by(email=confirm_token).first()
-        if not user_obj:
-            return make_response(jsonify({'message': "No match found! Please enter valid credentials", 'status': 400})), 400
-
-        user_obj.password = hash_password(password)
-        user_obj.save()
-        return make_response(jsonify({'message': 'Password reset succesfully.', 'status': 200}))
-    else:
+                else:
+                    return make_response(jsonify({'message': 'Token Expired.', 'status': 400})), 400
+            else:
+                return make_response(jsonify({'message': "No match found! Please enter valid credentials", 'status': 400})), 400
+            
+        else:
+            return make_response(jsonify({'message': "Invalid/Expired Token.", 'status': 400})), 400
+    except:
         return make_response(jsonify({'message': 'Authentication Error.', 'status': 400})), 400
