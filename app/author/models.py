@@ -35,8 +35,7 @@ class Author(db.Model):
         return f"<Author: {self.id}, User id: {self.user_id}>"
 
     def getAuthorById(id):
-        return Author.query.options(lazyload(Author.posts)).filter_by(id = id).first()
-
+        return Author.query.options(lazyload(Author.posts)).filter_by(id=id).first()
 
     def getAllAuthor():
         return Author.query.options(lazyload(Author.posts)).all()

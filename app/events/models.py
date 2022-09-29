@@ -2,6 +2,7 @@ from .. import db
 from datetime import datetime
 from sqlalchemy import text
 
+
 class Event(db.Model):
     """This class represents event table in the database.
     This stores all the information related to the events."""
@@ -11,7 +12,7 @@ class Event(db.Model):
     time = db.Column(db.DateTime, nullable=False, unique=False)
     address = db.Column(db.String(255), nullable=False, unique=False)
     event_created_at = db.Column(db.DateTime, default=datetime.now, index=True,
-                                server_default=text('CURRENT_TIMESTAMP'))
+                                 server_default=text('CURRENT_TIMESTAMP'))
     updated_at = db.Column(db.DateTime, default=datetime.now,
                            onupdate=datetime.now,
                            server_default=text('CURRENT_TIMESTAMP'))

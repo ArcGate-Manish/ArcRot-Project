@@ -1,4 +1,4 @@
-from flask import jsonify, request, make_response
+from flask import jsonify
 from . import author_blueprint
 from .models import Author
 

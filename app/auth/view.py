@@ -1,5 +1,3 @@
-import email
-from lib2to3.pgen2 import token
 from flask import session, request, jsonify, make_response
 from flask_login import login_required
 from flask_security.utils import verify_password
@@ -9,6 +7,7 @@ from . import login_blueprint
 from .. import User
 from flask_cors import cross_origin
 from sqlalchemy.orm import lazyload
+from email_validator import validate_email
 
 
 # ##############################################################################
@@ -19,35 +18,41 @@ from sqlalchemy.orm import lazyload
 @cross_origin(supports_credentials=True)
 def loginapi():
     try:
-
         data = request.get_json()
         _username = data['email']
         _password = data['password']
-        if _username and _password:
-            result = User.query.options(lazyload(User.roles)).filter(
-                User.email == _username).first()
-            if result:
-                if verify_password(_password, result.password):
-                    session['email'] = result.email
+        try:
+            validation = validate_email(_username)
+            _username = validation.email
 
-                    resp = 1 if result.roles[0].name == 'superuser' else 0
-                    return jsonify(resp), 200
+            if _username and _password:
+                result = User.query.options(lazyload(User.roles)).filter(
+                    User.email == _username).first()
+                if result:
+                    if verify_password(_password, result.password):
+                        session['email'] = result.email
+
+                        resp = 1 if result.roles[0].name == 'superuser' else 0
+                        return jsonify(resp), 200
+                    else:
+                        resp = jsonify(
+                            {'message': 'Bad Request - invalid password'})
+                        resp.status_code = 400
+                        return resp
                 else:
                     resp = jsonify(
-                        {'message': 'Bad Request - invalid password'})
+                        {'message': 'Bad Request - invalid username'})
                     resp.status_code = 400
                     return resp
             else:
                 resp = jsonify(
-                    {'message': 'Bad Request - invalid username'})
+                    {'message': 'Bad Request - invalid credendtials'})
                 resp.status_code = 400
                 return resp
-        else:
-            resp = jsonify({'message': 'Bad Request - invalid credendtials'})
-            resp.status_code = 400
-            return resp
+        except Exception as e:
+            return "not a email"
     except Exception as e:
-        return "hello"
+        return "Please try again"
 
 
 # ########################################################################################
@@ -87,21 +92,21 @@ def forgotPassword():
 @login_blueprint.route('/reset_password', methods=['POST'])
 @cross_origin(supports_credentials=True)
 def reset_password():
-    try: 
+    try:
         arguments = request.args
         token = arguments.get('token')
         password = request.get_json().get('password')
         confirm_pass = request.get_json().get('confirm_pass')
         confirm_token = confirrm_token(token)
         # print("-----------------",request.__dict__)
-        print("++++++++++++++++++++", token,confirm_token, password, confirm_pass)
+        # print("++++++++++++++++++++", token, confirm_token, password, confirm_pass)
         if confirm_token:
             user = User.query.filter(User.email == confirm_token).first()
             if user:
                 if confirm_token and user.token_generated:
 
                     if None in [token, confirm_token, password, confirm_pass]:
-                        return make_response(jsonify({'message': "Invalid Credentials", 'status': 400})), 400   
+                        return make_response(jsonify({'message': "Invalid Credentials", 'status': 400})), 400
                     if password != confirm_pass:
                         return make_response(jsonify({'message': "Passwords dosen't match", 'status': 400})), 400
                     user.password = hash_password(password)
@@ -113,7 +118,7 @@ def reset_password():
                     return make_response(jsonify({'message': 'Token Expired.', 'status': 400})), 400
             else:
                 return make_response(jsonify({'message': "No match found! Please enter valid credentials", 'status': 400})), 400
-            
+
         else:
             return make_response(jsonify({'message': "Invalid/Expired Token.", 'status': 400})), 400
     except:

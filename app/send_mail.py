@@ -1,7 +1,6 @@
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
-import threading
 from urllib import request
 from itsdangerous import URLSafeTimedSerializer
 from app import app, mail

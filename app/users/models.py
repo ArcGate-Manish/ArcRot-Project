@@ -1,7 +1,10 @@
+from audioop import add
 from datetime import datetime
 from sqlalchemy import text
-from sqlalchemy.orm import lazyload
+from sqlalchemy.orm import lazyload, validates
 from flask_security import UserMixin, RoleMixin
+import re
+from email_validator import validate_email, EmailNotValidError
 from .. import db
 
 
@@ -65,6 +68,12 @@ class User(db.Model, UserMixin):
     author = db.relationship('Author', backref='users', lazy='joined')
     roles = db.relationship('Role', secondary=roles_users,
                             backref='users', lazy='joined')
+
+    
+    @validates('email')
+    def validate_email(self, key, address):
+        assert '@' and '.'in address
+        return address
 
     def save(self):
         db.session.add(self)

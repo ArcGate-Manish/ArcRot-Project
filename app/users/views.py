@@ -1,6 +1,7 @@
 from flask import jsonify
-from . import user_blueprint
+
 from .models import User
+from . import user_blueprint
 
 
 @user_blueprint.route('/<int:id>/', methods=['GET'])

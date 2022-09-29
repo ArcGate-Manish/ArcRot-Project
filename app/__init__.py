@@ -1,4 +1,3 @@
-import os
 from os.path import join, dirname, abspath
 from flask import (Flask, render_template)
 from flask_sqlalchemy import SQLAlchemy
@@ -57,6 +56,10 @@ from .posts.models import Post, PostImages, Tag
 from .events.models import Event
 
 
+# #####################################################################
+#                         BLUEPRINT REGISTER
+# #####################################################################
+
 from .admin import admin_blueprint
 from .author import author_blueprint
 from .users import user_blueprint
@@ -64,6 +67,7 @@ from .clubs import club_blueprint
 from .posts import post_blueprint
 from .auth import login_blueprint
 from .events import event_blueprint
+# from .uploads import upload_blueprint
 
 app.register_blueprint(login_blueprint)
 app.register_blueprint(post_blueprint)
@@ -72,6 +76,7 @@ app.register_blueprint(admin_blueprint)
 app.register_blueprint(author_blueprint)
 app.register_blueprint(user_blueprint)
 app.register_blueprint(event_blueprint)
+# app.register_blueprint(upload_blueprint)
 
 
 csrf.exempt(login_blueprint)
@@ -86,4 +91,3 @@ app.cli.add_command(create_database)
 @app.route('/')
 def index():
     return render_template('index.html')
-

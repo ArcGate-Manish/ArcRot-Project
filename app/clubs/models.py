@@ -78,8 +78,7 @@ class ClubMembers(db.Model):
     club_member_email = db.Column(db.String(255), nullable=False, unique=True)
     member_till = db.Column(db.DateTime, default=datetime.now, nullable=False,
                             server_default=text('CURRENT_TIMESTAMP'), onupdate=datetime.now)
-    club_memb_is_active = db.Column(db.Boolean, default=0,
-                                    nullable=False, index=True)
+    active = db.Column(db.Boolean, default=True,index=True)
     profile_picture = db.Column(db.String(255), nullable=True)
 
     def save(self):
