@@ -38,7 +38,7 @@ def get_club_details(id):
             club_members_details[-1]['profile'] = row.profile
             club_members_details[-1]['club_member_email'] = row.club_member_email
             club_members_details[-1]['member_till'] = row.member_till
-            club_members_details[-1]['is_active'] = row.club_memb_is_active
+            club_members_details[-1]['is_active'] = row.active
             club_members_details[-1]['profile_picture'] = row.profile_picture
         details_list[-1]['club_members'] = club_members_details
         return jsonify(details_list)
@@ -83,7 +83,7 @@ def get_all_club_details():
                 club_members_details[-1]['profile'] = club_member.profile
                 club_members_details[-1]['club_member_email'] = club_member.club_member_email
                 club_members_details[-1]['member_till'] = club_member.member_till
-                club_members_details[-1]['is_active'] = club_member.club_memb_is_active
+                club_members_details[-1]['is_active'] = club_member.active
                 club_members_details[-1]['profile_picture'] = club_member.profile_picture
             details_list[-1]['club_members'] = club_members_details
     response = make_response(jsonify(details_list))
